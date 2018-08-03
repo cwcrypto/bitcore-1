@@ -81,6 +81,8 @@
     "bitcore-lib-cash": "^8.3.4",
     "bitcore-p2p": "^8.3.4",
     "bitcore-p2p-cash": "^8.3.4",
+    "litecore-p2p": "~1.1.2",
+    "litecore-lib": "cwcrypto/bitcore-lib#fix-regtest-v8",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
