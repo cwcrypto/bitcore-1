@@ -344,10 +344,10 @@ export class TransactionModel extends BaseModel<ITransaction> {
         }
         let address = '';
         if (output.script) {
-          address = output.script.toAddress(network).toString(true);
+          address = output.script.toAddress(network).toString(false);
           if (address === 'false' && output.script.classify() === 'Pay to public key') {
             let hash = Chain[chain].lib.crypto.Hash.sha256ripemd160(output.script.chunks[0].buf);
-            address = Chain[chain].lib.Address(hash, network).toString(true);
+            address = Chain[chain].lib.Address(hash, network).toString(false);
           }
         }
         mintOps.push({
