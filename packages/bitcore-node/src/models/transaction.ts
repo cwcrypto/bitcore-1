@@ -31,6 +31,7 @@ export type ITransaction = {
   inputCount: number;
   outputCount: number;
   value: number;
+  raw: string;
   wallets: ObjectID[];
 };
 
@@ -201,6 +202,7 @@ export class TransactionModel extends BaseModel<ITransaction> {
                 blockTime,
                 blockTimeNormalized,
                 coinbase: parentTx.coinbase,
+                raw: parentTx.raw,
                 fee: parentTx.fee,
                 size: parentTx.size,
                 locktime: parentTx.locktime,
@@ -285,6 +287,7 @@ export class TransactionModel extends BaseModel<ITransaction> {
                 blockTime,
                 blockTimeNormalized,
                 coinbase: tx.isCoinbase(),
+                raw: tx.toBuffer().toString('hex'),
                 fee,
                 size: tx.toBuffer().length,
                 locktime: tx.nLockTime,
@@ -535,6 +538,7 @@ export class TransactionModel extends BaseModel<ITransaction> {
       locktime: tx.locktime || -1,
       inputCount: tx.inputCount || -1,
       outputCount: tx.outputCount || -1,
+      raw: tx.raw || '',
       size: tx.size || -1,
       fee: tx.fee || -1,
       value: tx.value || -1
