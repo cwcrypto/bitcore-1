@@ -17,7 +17,7 @@
     "printWidth": 120
   },
   "scripts": {
-    "start": "npm run tsc && node build/src/server.js",
+    "start": "npm run tsc && node --max-old-space-size=8192 build/src/server.js",
     "debug": "npm run tsc && node --inspect build/src/server.js --DEBUG true",
     "clean": "rm -rf build",
     "compile": "npm run tsc",
