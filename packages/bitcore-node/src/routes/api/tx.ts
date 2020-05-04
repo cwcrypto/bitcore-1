@@ -57,6 +57,25 @@ router.get('/:txId', async (req, res) => {
   }
 });
 
+router.get('/:txId/raw', async (req, res) => {
+  let { chain, network, txId } = req.params;
+  if (typeof txId !== 'string' || !chain || !network) {
+    return res.status(400).send('Missing required param');
+  }
+  chain = chain.toUpperCase();
+  network = network.toLowerCase();
+  try {
+    const tx = await ChainStateProvider.getRawTransaction({ chain, network, txId });
+    if (! tx) {
+      return res.status(404).send(`The requested txid ${txId} could not be found.`);
+    } else {
+      return res.send(tx);
+    }
+  } catch (err) {
+    return res.status(500).send(err);
+  }
+});
+
 router.get('/:txId/authhead', async (req, res) => {
   let { chain, network, txId } = req.params;
   if (typeof txId !== 'string' || !chain || !network) {
