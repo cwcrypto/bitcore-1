@@ -213,7 +213,7 @@ export class InternalStateProvider implements CSP.IChainStateService {
         if (err) {
           reject(err);
         } else {
-          resolve({ hex: rpcTx.hex });
+          resolve({ network: network, chain: chain, hex: rpcTx.hex });
         }
       });
     });
