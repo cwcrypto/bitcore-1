@@ -207,13 +207,16 @@ export class InternalStateProvider implements CSP.IChainStateService {
       throw 'Missing required param';
     }
     network = network.toLowerCase();
-    let rpcTx = {} as  RPCTransaction;
-    
-    this.getRPC(chain, network).getTransaction(txId, (_, tx: RPCTransaction) => {
-      rpcTx = tx;
-    })
-    
-    return { hex: rpcTx.hex };
+
+    return new Promise((resolve, reject) => {
+      this.getRPC(chain, network).getTransaction(txId, (err: any, rpcTx: RPCTransaction) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve({ hex: rpcTx.hex });
+        }
+      });
+    });
   }
 
   async getAuthhead(params: CSP.StreamTransactionParams) {
