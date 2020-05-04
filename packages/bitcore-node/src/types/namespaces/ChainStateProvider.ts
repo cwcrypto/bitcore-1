@@ -139,6 +139,7 @@ export declare namespace CSP {
     getAuthhead(params: StreamTransactionParams): Promise<AuthheadJSON | undefined>;
     getDailyTransactions(params: { chain: string; network: string }): Promise<DailyTransactionsJSON>;
     getTransaction(params: StreamTransactionParams): Promise<TransactionJSON | undefined>;
+    getRawTransaction(params: StreamTransactionParams): Promise<any>;
     streamWalletAddresses(params: StreamWalletAddressesParams): any;
     walletCheck(params: WalletCheckParams): any;
     streamWalletTransactions(params: StreamWalletTransactionsParams): any;

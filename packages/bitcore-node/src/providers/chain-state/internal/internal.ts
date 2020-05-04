@@ -9,7 +9,7 @@ import { WalletStorage, IWallet } from '../../../models/wallet';
 import { WalletAddressStorage, IWalletAddress } from '../../../models/walletAddress';
 import { CSP } from '../../../types/namespaces/ChainStateProvider';
 import { Storage } from '../../../services/storage';
-import { RPC } from '../../../rpc';
+import { RPC, RPCTransaction } from '../../../rpc';
 import { LoggifyClass } from '../../../decorators/Loggify';
 import { TransactionStorage, ITransaction } from '../../../models/transaction';
 import { ListTransactionsStream } from './transforms';
@@ -199,6 +199,21 @@ export class InternalStateProvider implements CSP.IChainStateService {
     } else {
       return undefined;
     }
+  }
+
+  async getRawTransaction(params: CSP.StreamTransactionParams) {
+    let { chain, network, txId } = params;
+    if (typeof txId !== 'string' || !chain || !network) {
+      throw 'Missing required param';
+    }
+    network = network.toLowerCase();
+    let rpcTx = {} as  RPCTransaction;
+    
+    this.getRPC(chain, network).getTransaction(txId, (_, tx: RPCTransaction) => {
+      rpcTx = tx;
+    })
+    
+    return { hex: rpcTx.hex };
   }
 
   async getAuthhead(params: CSP.StreamTransactionParams) {
